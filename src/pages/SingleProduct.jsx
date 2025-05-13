@@ -1,11 +1,10 @@
 import { useLoaderData } from "react-router-dom";
-import { formatPrice, customFetch } from "../utils";
+import { formatPrice, customFetch, generateAmountOptions } from "../utils";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export async function loader({ params }) {
   const result = await customFetch(`/products/${params.id}`);
-  console.log(result);
   return { product: result.data.data };
 }
 
@@ -16,6 +15,10 @@ function SingleProduct() {
   const dollarsAmount = formatPrice(price);
 
   const [productColor, setProductColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
+  function handleAmount(e) {
+    setAmount(parseInt(e.target.value));
+  }
 
   return (
     <section>
@@ -67,6 +70,32 @@ function SingleProduct() {
                 );
               })}
             </div>
+          </div>
+          {/* AMOUNT */}
+          <div className="form-control w-full max-w-xs">
+            <label className="label" htmlFor="amount">
+              <h4 className="text-base font-medium tracking-wider capitalize">
+                amount
+              </h4>
+            </label>
+            <select
+              id="amount"
+              className="select select-secondary select-bordered select-md"
+              value={amount}
+              onChange={handleAmount}
+            >
+              {generateAmountOptions(5)}
+            </select>
+          </div>
+          {/* CART BTN */}
+          <div className="mt-10">
+            <button
+              type="submit"
+              className="btn btn-secondary btn-md"
+              onClick={() => console.log("add to bag")}
+            >
+              add to bag
+            </button>
           </div>
         </div>
       </div>
