@@ -1,7 +1,11 @@
 import { Form, useLoaderData, Link } from "react-router-dom";
 import FormInput from "./FormInput";
+import FormSelect from "./FormSelect";
 
 function Filters() {
+  const { meta } = useLoaderData();
+  console.log(meta);
+
   return (
     <Form
       className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 
@@ -13,6 +17,27 @@ function Filters() {
         label="search product"
         name="search"
         size="input-sm"
+      />
+      {/* GATEGORIES */}
+      <FormSelect
+        label="select category"
+        name="category"
+        list={meta.categories}
+        size="select-sm"
+      />
+      {/* COMPANIES */}
+      <FormSelect
+        label="select company"
+        name="company"
+        list={meta.companies}
+        size="select-sm"
+      />
+      {/* ORDER */}
+      <FormSelect
+        label="sort by"
+        name="order"
+        list={["a-z", "z-a", "high", "low"]}
+        size="select-sm"
       />
       {/* BUTTONS */}
       <button type="submit" className="btn btn-primary btn-sm">
