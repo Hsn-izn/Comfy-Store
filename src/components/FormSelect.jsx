@@ -1,4 +1,4 @@
-function FormSelect({ label, name, list, defaulValue, size }) {
+function FormSelect({ label, name, list, defaultValue, size }) {
   return (
     <div className="form-control">
       <label htmlFor={name} className="label">
@@ -7,7 +7,7 @@ function FormSelect({ label, name, list, defaulValue, size }) {
       <select
         name={name}
         id={name}
-        defaultValue={defaulValue}
+        defaultValue={defaultValue}
         className={`select select-bordered ${size}`}
       >
         {list.map((item) => {
