@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../features/user/userSlice";
 
-function Navbar() {
+function Navbar({ authPages = false }) {
   const dispatch = useDispatch();
   function handleTheme() {
     dispatch(toggleTheme());
@@ -40,6 +40,7 @@ function Navbar() {
         </div>
 
         {/* CENTER PORTION*/}
+
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal">
             <NavLinks />
@@ -57,17 +58,18 @@ function Navbar() {
             <BsMoonFill className="swap-off w-4 h-4" />
           </label>
           {/* CART LINK */}
-          <NavLink
-            to={"/cart"}
-            className={"btn btn-ghost btn-circle btn-md ml-4"}
-          >
-            <div className="indicator">
-              <BsCart3 className="h-6 w-6" />
-              <span className="badge badge-sm badge-primary indicator-item">
-                {numItemsInCart}
-              </span>
-            </div>
-          </NavLink>
+          {authPages ? null :
+            <NavLink
+              to={"/cart"}
+              className={"btn btn-ghost btn-circle btn-md ml-4"}
+            >
+              <div className="indicator">
+                <BsCart3 className="h-6 w-6" />
+                <span className="badge badge-sm badge-primary indicator-item">
+                  {numItemsInCart}
+                </span>
+              </div>
+            </NavLink>}
         </div>
       </div>
       <div className=""> </div>
