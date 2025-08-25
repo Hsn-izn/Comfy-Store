@@ -5,10 +5,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
 
-export async function loader({ params }) {
-	const result = await customFetch(`/products/${params.id}`);
-	return { product: result.data.data };
-}
+export const loader =
+	(queryClient) =>
+	async ({ params }) => {
+		const result = await customFetch(`/products/${params.id}`);
+		return { product: result.data.data };
+	};
 
 function SingleProduct() {
 	const { product } = useLoaderData();
