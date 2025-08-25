@@ -6,9 +6,25 @@ import {
 	ComplexPaginationContainer,
 	SectionTitle,
 } from "../components";
+import { QueryClient } from "@tanstack/react-query";
+
+const ordersQuery = (params, user) => {
+	return {
+		queryKey: [
+			"orders",
+			user.username,
+			params.page ? parseInt(params.page) : 1,
+		],
+		queryFn: () =>
+			customFetch.get("/orders", {
+				params,
+				headers: { Authorization: `Bearer ${user.token}` },
+			}),
+	};
+};
 
 export const loader =
-	(store) =>
+	(store, queryClient) =>
 	async ({ request }) => {
 		const user = store.getState().userState.user;
 		if (!user) {
@@ -20,10 +36,9 @@ export const loader =
 		]);
 
 		try {
-			const response = await customFetch.get("/orders", {
-				params,
-				headers: { Authorization: `Bearer ${user.token}` },
-			});
+			const response = await queryClient.ensureQueryData(
+				ordersQuery(params, user)
+			);
 			return { orders: response.data.data, meta: response.data.meta };
 		} catch (error) {
 			const errorMessage =

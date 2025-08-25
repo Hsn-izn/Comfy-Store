@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router-dom";
 import { Filters, PaginationContainer, ProductsContainer } from "../components";
 import { customFetch } from "../utils";
 
@@ -29,20 +28,20 @@ const allProductsQuery = (queryParams) => {
 export const loader =
 	(queryClient) =>
 	async ({ request }) => {
-		// const params = Object.fromEntries([
-		//   ...new URL(request.url).searchParams.entries(),
-		// ]);
-		const params = new URL(request.url).searchParams;
-		const paramsObject = Object.fromEntries([...params.entries()]);
+		// const params = new URL(request.url).searchParams;
+		// const paramsObject = Object.fromEntries([...params.entries()]);
+		const params = Object.fromEntries([
+			...new URL(request.url).searchParams.entries(),
+		]);
 
 		const response = await queryClient.ensureQueryData(
-			allProductsQuery(paramsObject)
+			allProductsQuery(params)
 		);
 
 		const products = response.data.data;
 		const meta = response.data.meta;
 
-		return { products, meta, paramsObject };
+		return { products, meta, params };
 	};
 
 function Products() {

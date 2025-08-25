@@ -5,8 +5,8 @@ import FormRange from "./FormRange";
 import FormCheckbox from "./FormCheckbox";
 
 function Filters() {
-	const { meta, paramsObject } = useLoaderData();
-	const { search, company, category, order, price, shipping } = paramsObject;
+	const { meta, params } = useLoaderData();
+	const { search, company, category, order, price, shipping } = params;
 	return (
 		<Form
 			className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 
